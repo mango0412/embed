@@ -1,0 +1,20 @@
+/* 기본 스타일 설정: HTML의 스크롤 제거 및 iframe을 전체 뷰포트 크기로 설정 */
+body {
+    margin: 0;
+}
+
+html {
+    overflow: hidden;
+    /* 스크롤 제거 */
+}
+
+iframe {
+    width: 100vw;
+    /* 전체 뷰포트 너비 */
+    height: 100vh;
+    /* 전체 뷰포트 높이 */
+    border: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
