@@ -23,7 +23,7 @@ function onYouTubeIframeAPIReady() {
         events: {
             onStateChange: event => {
                 if (event.data === YT.PlayerState.ENDED) {
-                    console.log(`End of video = ${vid}`);
+                    console.log('End of video');
                 }
             }
         }
