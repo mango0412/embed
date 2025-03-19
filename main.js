@@ -24,6 +24,12 @@ function onYouTubeIframeAPIReady() {
             onStateChange: event => {
                 if (event.data === YT.PlayerState.ENDED) {
                     console.log('End of video');
+                    const message = {
+                        type: 'videoEvent',
+                        event: 'ended',
+                        videoId: event.target.getVideoData().video_id
+                    };
+                    window.parent.postMessage(message, '*'); // 영상 종료 메시지를 부모 창에 전송
                 }
             }
         }
