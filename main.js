@@ -1,7 +1,8 @@
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
         const url = new URL(window.location);
-        const vid = url.searchParams.get('v') ?? 'NAo38Q9c4xA';
+        // const vid = url.searchParams.get('v') ?? 'NAo38Q9c4xA';
+        const vid = url.searchParams.get('v') ?? 'Hwcb6VY9YUU';
         url.searchParams.delete('v');
         // enablejsapi 파라미터 추가
         url.searchParams.set('enablejsapi', '1');
@@ -23,13 +24,33 @@ function onYouTubeIframeAPIReady() {
         events: {
             onStateChange: event => {
                 if (event.data === YT.PlayerState.ENDED) {
-                    console.log('End of video');
                     const message = {
                         type: 'videoEvent',
                         event: 'ended',
                         videoId: event.target.getVideoData().video_id
                     };
                     window.parent.postMessage(message, '*'); // 영상 종료 메시지를 부모 창에 전송
+                }
+            },
+            onError: event => {
+                if (event.data === 101 || event.data === 150) {
+                    console.error("YouTube Error (101/150):", event.data); // 콘솔 출력 추가
+                    const message = {
+                        type: 'videoEvent',
+                        event: 'error',
+                        videoId: event.target.getVideoData().video_id,
+                        errorCode: event.data
+                    };
+                    window.parent.postMessage(message, '*'); // 기존 에러 메시지 처리
+                } else {
+                    console.error("YouTube Other Error:", event.data); // 콘솔 출력 추가
+                    const message = {
+                        type: 'videoEvent',
+                        event: 'errorOther',
+                        videoId: event.target.getVideoData().video_id,
+                        errorCode: event.data
+                    };
+                    window.parent.postMessage(message, '*'); // 기타 에러 메시지 처리
                 }
             }
         }
