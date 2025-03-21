@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html>
     <head>
         <meta charset="UTF-8">
-        <title>Youtube Embed Video Player</title>
+        <!-- 외부 CSS 파일(styles.css) 로드 -->
         <link rel="stylesheet" href="styles.css">
-        <script src="main.js" defer></script>
+        <!-- YouTube IFrame API 추가 -->
+        <script src="https://www.youtube.com/iframe_api"></script>
     </head>
     <body>
+        <!-- YouTube 영상 플레이어용 iframe (id 속성 추가) -->
         <iframe id="player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
+        <!-- 메인 JavaScript 파일(main.js) 로드 -->
+        <script src="main.js" defer></script>
     </body>
 </html>

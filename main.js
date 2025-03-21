@@ -1,3 +1,6 @@
+// 전역 변수 선언
+let playerInstance;
+
 (() => {
     document.addEventListener('DOMContentLoaded', () => {
         const url = new URL(window.location);
@@ -18,9 +21,9 @@
     });
 })();
 
-// 추가: 영상 종료 감지 함수 (YouTube IFrame API 콜백)
+// 기존 onYouTubeIframeAPIReady 함수 (playerInstance에 할당하도록 수정)
 function onYouTubeIframeAPIReady() {
-    new YT.Player('player', {
+    playerInstance = new YT.Player('player', {
         events: {
             onStateChange: event => {
                 if (event.data === YT.PlayerState.ENDED) {
@@ -56,3 +59,14 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
+
+// 새로 추가: 부모창에서 전달된 볼륨 이벤트 감지 및 볼륨 조절
+window.addEventListener('message', event => {
+    // event.data: { type: 'volume', volume: 숫자 }
+    if (event.data && event.data.type === 'volume') {
+        const newVolume = event.data.volume;
+        if (playerInstance && typeof newVolume === 'number') {
+            playerInstance.setVolume(newVolume);
+        }
+    }
+});
