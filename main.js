@@ -18,7 +18,6 @@ let playerInstance;
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
-    });
 })();
 
 // 기존 onYouTubeIframeAPIReady 함수 (playerInstance에 할당하도록 수정)
