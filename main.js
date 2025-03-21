@@ -35,6 +35,15 @@ function onYouTubeIframeAPIReady() {
                         volume: currentVolume // 볼륨 값 추가
                     };
                     window.parent.postMessage(message, '*'); // 영상 종료 메시지를 부모 창에 전송
+                } else if (event.data === YT.PlayerState.PLAYING) {
+                    const currentVolume = playerInstance ? playerInstance.getVolume() : null; // 현재 볼륨 값 가져오기
+                    const message = {
+                        type: 'videoEvent',
+                        event: 'started',
+                        videoId: event.target.getVideoData().video_id,
+                        volume: currentVolume // 볼륨 값 추가
+                    };
+                    window.parent.postMessage(message, '*'); // 영상 시작 메시지를 부모 창에 전송
                 }
             },
             onError: event => {
