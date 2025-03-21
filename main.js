@@ -27,10 +27,12 @@ function onYouTubeIframeAPIReady() {
         events: {
             onStateChange: event => {
                 if (event.data === YT.PlayerState.ENDED) {
+                    const currentVolume = playerInstance ? playerInstance.getVolume() : null; // 현재 볼륨 값 가져오기
                     const message = {
                         type: 'videoEvent',
                         event: 'ended',
-                        videoId: event.target.getVideoData().video_id
+                        videoId: event.target.getVideoData().video_id,
+                        volume: currentVolume // 볼륨 값 추가
                     };
                     window.parent.postMessage(message, '*'); // 영상 종료 메시지를 부모 창에 전송
                 }
