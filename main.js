@@ -18,6 +18,7 @@ let playerInstance;
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
+    });
 })();
 
 // 기존 onYouTubeIframeAPIReady 함수 (playerInstance에 할당하도록 수정)
@@ -29,14 +30,14 @@ function onYouTubeIframeAPIReady() {
                     const message = {
                         type: 'videoEvent',
                         event: 'ended',
-                        videoId: event.target.getVideoData().video_id,
+                        videoId: event.target.getVideoData().video_id
                     };
                     window.parent.postMessage(message, '*'); // 영상 종료 메시지를 부모 창에 전송
                 } else if (event.data === YT.PlayerState.PLAYING) {
                     const message = {
                         type: 'videoEvent',
                         event: 'started',
-                        videoId: event.target.getVideoData().video_id,
+                        videoId: event.target.getVideoData().video_id
                     };
                     window.parent.postMessage(message, '*'); // 영상 시작 메시지를 부모 창에 전송
                 }
