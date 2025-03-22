@@ -2,17 +2,19 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <!-- 외부 CSS 파일(styles.css) 로드 -->
         <link rel="stylesheet" href="styles.css">
-        <!-- YouTube IFrame API 추가 -->
-        <script src="https://www.youtube.com/iframe_api"></script>
+        <!-- 중복된 YouTube IFrame API 로드를 제거하고 main.js에서 처리 -->
     </head>
     <body>
-        <!-- YouTube 영상 플레이어용 iframe (id 속성 추가) -->
+        <!-- YouTube 영상 플레이어용 iframe -->
         <iframe id="player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen></iframe>
-        <!-- 메인 JavaScript 파일(main.js) 로드 -->
-        <script src="main.js" defer></script>
+
+        <!-- JavaScript 파일들을 올바른 순서로 로드 -->
+        <script src="js/utils.js"></script>
+        <script src="js/status-display.js"></script>
+        <script src="js/player-monitor.js"></script>
+        <script src="js/main.js"></script>
     </body>
 </html>
