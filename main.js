@@ -56,7 +56,7 @@ function onYouTubeIframeAPIReady() {
                     console.error("YouTube Other Error:", event.data); // 콘솔 출력 추가
                     const message = {
                         type: 'videoEvent',
-                        event: 'errorOther',
+                        event: 'error',
                         videoId: event.target.getVideoData().video_id,
                         errorCode: event.data
                     };
