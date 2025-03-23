@@ -25,42 +25,58 @@ function onYouTubeIframeAPIReady() {
     playerInstance = new YT.Player('player', {
         events: {
             onReady: (e) => {
-                window.parent.postMessage({
-                    event: 'PlayerReady',
-                    // 영상 전체 길이(초 단위)
-                    duration: e.target.getDuration(),
-                    // 현재 영상의 정보(제목, 비디오 ID 등)
-                    videoData: e.target.getVideoData(),
-                    // 볼륨 크기(0~100)
-                    volume: e.target.getVolume(),
-                    // 재생 중인 위치(초 단위)
-                    currentTime: e.target.getCurrentTime()
-                }, '*');
+                try {
+                    window.parent['postMessage']({
+                        type: 'PlayerReady',
+                        // 영상 전체 길이(초 단위)
+                        duration: e.target.getDuration(),
+                        // 현재 영상의 정보(제목, 비디오 ID 등)
+                        videoData: e.target.getVideoData(),
+                        // 볼륨 크기(0~100)
+                        volume: e.target.getVolume(),
+                        // 재생 중인 위치(초 단위)
+                        currentTime: e.target.getCurrentTime()
+                    }, '*');
+                } catch (err) {
+                    console.warn('Potential blocker:', err);
+                }
             },
             onStateChange: (e) => {
-                window.parent.postMessage({
-                    event: 'PlayerStateChange',
-                    // 플레이어 상태(재생, 일시정지, 버퍼링 등)
-                    state: e.data,
-                    // 재생 중인 위치(초 단위)
-                    currentTime: e.target.getCurrentTime(),
-                    // 볼륨 크기(0~100)
-                    volume: e.target.getVolume()
-                }, '*');
+                try {
+                    window.parent['postMessage']({
+                        type: 'PlayerStateChange',
+                        // 플레이어 상태(재생, 일시정지, 버퍼링 등)
+                        state: e.data,
+                        // 재생 중인 위치(초 단위)
+                        currentTime: e.target.getCurrentTime(),
+                        // 볼륨 크기(0~100)
+                        volume: e.target.getVolume()
+                    }, '*');
+                } catch (err) {
+                    console.warn('Potential blocker:', err);
+                }
             },
             onPlaybackQualityChange: (e) => {
-                window.parent.postMessage({
-                    event: 'QualityChange',
-                    // 화질 정보(small, medium, large, hd720 등)
-                    quality: e.data
-                }, '*');
+                try {
+                    window.parent['postMessage']({
+                        type: 'QualityChange',
+                        // 화질 정보(small, medium, large, hd720 등)
+                        quality: e.data
+                    }, '*');
+                } catch (err) {
+                    console.warn('Potential blocker:', err);
+                }
             },
             onError: (e) => {
-                window.parent.postMessage({
-                    event: 'Error',
-                    // 에러 코드
-                    errorCode: e.data
-                }, '*');
+                try {
+                    window.parent['postMessage']({
+                        type: 'Error',
+                        // 에러 코드
+                        errorCode: e.data
+                    }, '*');
+                } catch (err) {
+                    console.warn('Potential blocker:', err);
+                }
             }
         }
     });
